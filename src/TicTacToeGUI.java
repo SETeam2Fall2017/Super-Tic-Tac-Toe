@@ -5,8 +5,8 @@ import java.awt.event.*;
 
 public class TicTacToeGUI extends JFrame {
 
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+    private static final int WIDTH = 750;
+    private static final int HEIGHT = 750;
     private int MOVES = 0;
        private boolean Os;
     private boolean gameOver;
