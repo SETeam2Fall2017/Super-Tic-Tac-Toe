@@ -249,8 +249,8 @@ public class TicTacToeGUI extends JFrame {
         Board.State[][] stevensMove = notMyGame.toArray();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                cells[getIndex(i, j)].setText(stevensMove[i][j].toString());
                 if (stevensMove[i][j] != Board.State.Blank) {
+                    cells[getIndex(i, j)].setText(stevensMove[i][j].toString());
                     cells[getIndex(i, j)].setEnabled(false);
                 }
             }
