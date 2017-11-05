@@ -88,8 +88,8 @@ public class TicTacToeGUI extends JFrame {
                 theGame.printBoard();
                 System.out.println(notMyGame.toString());
             }
-            //Display winner message
-            if (Os) {
+            //Display winner message need to negate 0s due to logic I don't understand because it's late
+            if (!Os) {
                 result.setText("Game Over: Os win!!");
             } else {
                 result.setText("Game Over: Xs win!");
@@ -339,8 +339,8 @@ public class TicTacToeGUI extends JFrame {
                 //Change player
                 Os = !Os;
 
-                //Display player message
-                if (Os) {
+                //Display player message need to negate 0s due to logic I don't understand because it's late
+                if (!Os) {
                     result.setText("O's Turn!");
                 } else {
                     result.setText("X's Turn!");
