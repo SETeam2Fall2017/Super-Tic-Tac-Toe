@@ -12,7 +12,7 @@ public static void newGame(){
 }
     public static void main(String[] args) {
         newGame();
-       /*
+       /* A Change
        GameBoard newGame = new GameBoard();
        MiniMax AI = new MiniMax();
        newGame.setBoardAt(0, -1);
