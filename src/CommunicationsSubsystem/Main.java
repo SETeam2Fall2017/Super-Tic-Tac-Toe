@@ -5,10 +5,17 @@
  */
 package CommunicationsSubsystem;
 
+import GameplayLogicSubsystem.GameBoard;
+
 /**
  *
  * @author elchapo
  */
 public class Main {
-    
+
+    public GameBoard getServerUpdate() {
+        GameBoard G = new GameBoard();
+        
+        return G;
+    }
 }

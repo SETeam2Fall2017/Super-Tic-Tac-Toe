@@ -22,7 +22,7 @@ public class GameBoard {
     private int moveCount;
     private boolean gameOver;
 
-    GameBoard() {
+    public GameBoard() {
 
     }
 

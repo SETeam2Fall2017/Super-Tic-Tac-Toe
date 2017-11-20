@@ -6,8 +6,6 @@
 package UISubsystem;
 
 import GameplayLogicSubsystem.GameBoard;
-import UISubsystem.UIWindow;
-import java.awt.PopupMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

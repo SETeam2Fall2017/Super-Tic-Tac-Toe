@@ -1,6 +1,6 @@
-package getdemo;
+package CommunicationsSubsystem;
 
-import static getdemo.Methods.GetMethod;
+import static CommunicationsSubsystem.Methods.GetMethod;
 
 public class GetDemo {
 
