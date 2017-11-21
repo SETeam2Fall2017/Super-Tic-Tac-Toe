@@ -30,7 +30,7 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         Button pressed = (Button) event.getSource();
         pressed.setText(LocalDateTime.now().toString());
-        System.out.println(pressed.getId()+"You clicked me!");
+        System.out.println(pressed.getId()+": You clicked me!");
 
     }
     
@@ -40,6 +40,7 @@ public class FXMLDocumentController implements Initializable {
         int position = Integer.parseInt(pressed.getName().substring(2));
         
         //Implement move below
+        
     }
     
     @Override
