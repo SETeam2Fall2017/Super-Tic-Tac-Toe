@@ -14,8 +14,8 @@ import GameplayLogicSubsystem.GameBoard;
 public class Main {
 
     public GameBoard getServerUpdate() {
-        GameBoard G = new GameBoard();
-        
+        GameBoard G = null;
         return G;
+        
     }
 }

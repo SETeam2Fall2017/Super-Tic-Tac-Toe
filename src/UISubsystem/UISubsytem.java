@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author elchapo
+ * @author jon
  */
 public class UISubsytem extends Application {
     
@@ -36,6 +36,7 @@ public class UISubsytem extends Application {
     
     public static void main(String[] args) {
       launch(args);
+      
     }
 
 
