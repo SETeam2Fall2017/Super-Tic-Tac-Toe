@@ -32,7 +32,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button id="gb4" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb4" fx:id="gb4" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -42,37 +42,37 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Button id="gb1" layoutX="45.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb1" fx:id="gb1" layoutX="45.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                <children>
-                  <Button id="gb2" layoutX="54.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb2" fx:id="gb2" layoutX="54.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Button id="gb3" layoutX="103.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb3" fx:id="gb3" layoutX="103.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
-                  <Button id="gb5" layoutY="75.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb5" fx:id="gb5" layoutY="75.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <Button id="gb6" layoutX="100.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb6" fx:id="gb6" layoutX="100.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleButtonAction" text=" " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button id="gb7" layoutX="43.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleButtonAction" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb7" fx:id="gb7" layoutX="43.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleButtonAction" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <children>
-                  <Button id="gb8" layoutX="62.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleButtonAction" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button id="gb8" fx:id="gb8" layoutX="62.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleButtonAction" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>

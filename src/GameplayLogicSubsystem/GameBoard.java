@@ -17,7 +17,7 @@ public class GameBoard {
     private HashSet<Integer> movesAvailable;
     private int moveCount;
     private boolean gameOver;
-    private GameLogic parent;
+    private GameLogic parent = null;
 
     /**
      * Construct the Tic Tac Toe board.
@@ -33,6 +33,11 @@ public class GameBoard {
         movesAvailable = new HashSet<>();
         reset();
     }
+     /*   GameBoard() {
+        board = new State[BOARD_WIDTH][BOARD_WIDTH];
+        movesAvailable = new HashSet<>();
+        reset();
+     /* }
 
     /**
      * Set the cells to be blank and load the available moves (all the moves are
@@ -69,8 +74,10 @@ public class GameBoard {
      * @return          true if the move has not already been played
      */
     public boolean move (int index) {
+        if(parent!=null){
+        parent.updateUI(index);}
         return move(index% BOARD_WIDTH, index/ BOARD_WIDTH);
-        
+
     }
 
     /**

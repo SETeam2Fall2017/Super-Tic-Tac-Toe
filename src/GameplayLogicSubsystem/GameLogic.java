@@ -24,21 +24,31 @@ public class GameLogic {
      */
     public GameLogic(UserInterface U){
         UI = U;
+        theGame = new GameBoard(this);
+        
     }
     
     public void aiMove(){
+        System.out.println("GAMELOGIC:aiMove");
         miniMax.run(theGame.getTurn(), theGame, 6);
     
     }
     
+    public GameBoard.State getCurrentPlayer(){
+        return theGame.getTurn();
+    }
+    
     public void userMove(int index){
+        updateUI(index);
         theGame.move(index);
-        aiMove();
         System.out.println("GAMELOGIC:USER MOVE: " + index);
+        System.out.print(theGame.toString());
+
+        
     }
     
     public void updateUI(int Index){
-        UI.updateBoard(Index, theGame.getTurn());
+        UI.updateBoard(Index, this.theGame.getTurn());
     
     }
     
