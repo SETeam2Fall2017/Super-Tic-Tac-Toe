@@ -17,7 +17,8 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="342.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UISubsystem.UserInterface">
-   <center>
+   
+<center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -85,14 +86,14 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <RadioButton layoutX="51.0" layoutY="48.0" mnemonicParsing="false" text="Human First">
+                        <RadioButton fx:id="humanFirst" layoutX="51.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleRadioButton" selected="true" text="Human First">
                            <toggleGroup>
                               <ToggleGroup fx:id="toggleGroup1" />
                            </toggleGroup></RadioButton>
-                        <RadioButton layoutX="50.0" layoutY="72.0" mnemonicParsing="false" text="AI First" toggleGroup="$toggleGroup1" />
+                        <RadioButton fx:id="aiFirst" layoutX="50.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleRadioButton" text="AI First" toggleGroup="$toggleGroup1" />
                         <Label layoutX="50.0" layoutY="31.0" text="First Move" />
                         <Button id="playLocalButton" layoutX="49.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Play Game!" />
-                        <CheckBox layoutX="41.0" layoutY="116.0" mnemonicParsing="false" text="Death Match" />
+                        <CheckBox fx:id="deathMatchCheck" layoutX="41.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleCheckAction" text="Death Match" />
                      </children>
                   </AnchorPane>
             </content>
@@ -106,7 +107,7 @@
                         <TextField layoutX="17.0" layoutY="48.0" promptText="Port Number" />
                         <TextField layoutX="17.0" layoutY="82.0" promptText="Timeout (In Seconds)" />
                         <TextField layoutX="17.0" layoutY="120.0" promptText="Team ID" />
-                        <CheckBox id="firstMoveCheck" layoutX="57.0" layoutY="162.0" mnemonicParsing="false" text="First Move" />
+                        <CheckBox layoutX="57.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleCheckAction" text="First Move" />
                      </children>
                   </AnchorPane>
             </content>
@@ -119,12 +120,12 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Label id="bottomLabel" />
+                  <Label id="bottomLabel" fx:id="bottomLabel" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button id="restartButton" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="0.0" prefWidth="374.0" text="Restart" textFill="#b92929" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                  <Button id="restartButton" fx:id="restartButton" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="0.0" prefWidth="374.0" text="Restart" textFill="#b92929" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font name="Arial Bold" size="13.0" />
                      </font>
@@ -135,6 +136,10 @@
       </SplitPane>
    </bottom>
    <top>
-      <Label id="topLabel" text="Click Play Game!" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="23.0" prefWidth="509.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label id="topLabel" fx:id="topLabel" layoutX="11.0" layoutY="3.0" prefHeight="17.0" prefWidth="491.0" text="Click Play Game!" />
+         </children>
+      </AnchorPane>
    </top>
 </BorderPane>

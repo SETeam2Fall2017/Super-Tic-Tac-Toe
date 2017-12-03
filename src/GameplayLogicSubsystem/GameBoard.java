@@ -10,7 +10,7 @@ public class GameBoard {
     static final int BOARD_WIDTH = 3;
 
     public enum State {Blank, X, O}
-    public boolean deathMatch = false;
+    private boolean deathMatch;
     private State[][] board;
     private State playersTurn;
     private State winner;
@@ -26,11 +26,13 @@ public class GameBoard {
         board = new State[BOARD_WIDTH][BOARD_WIDTH];
         movesAvailable = new HashSet<>();
         parent = p;
+        deathMatch = false;
         reset();
     }
         GameBoard() {
         board = new State[BOARD_WIDTH][BOARD_WIDTH];
         movesAvailable = new HashSet<>();
+        deathMatch = false;
         reset();
     }
      /*   GameBoard() {
@@ -55,6 +57,9 @@ public class GameBoard {
         for (int i = 0; i < BOARD_WIDTH*BOARD_WIDTH; i++) {
             movesAvailable.add(i);
         }
+    }
+    public void setDeathMatch(boolean val){
+        deathMatch  = val;
     }
 
     /**
@@ -95,7 +100,8 @@ public class GameBoard {
         if (board[y][x] == State.Blank) {
             board[y][x] = playersTurn;
         } else {
-            return false;
+            throw new IllegalStateException("Cannot move on non blank tile.");
+           // return false;
         }
 
         moveCount++;

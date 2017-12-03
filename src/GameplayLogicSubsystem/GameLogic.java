@@ -30,7 +30,7 @@ public class GameLogic {
     
     public void aiMove(){
         System.out.println("GAMELOGIC:aiMove");
-        miniMax.run(theGame.getTurn(), theGame, 6);
+        MiniMax.run(theGame.getTurn(), theGame, 6);
     
     }
     
@@ -50,6 +50,11 @@ public class GameLogic {
     public void updateUI(int Index){
         UI.updateBoard(Index, this.theGame.getTurn());
     
+    }
+    
+    public void gameOver(String player){
+        
+        UI.gameOver("Winner is " + player);
     }
     
 }

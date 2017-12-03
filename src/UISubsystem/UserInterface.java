@@ -11,6 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -18,11 +21,19 @@ import javafx.scene.control.Label;
  */
 public class UserInterface implements Initializable {
 
-    private Label label;
+    private boolean localMatch, aiFirstMove, isDeathMatch;
     private GameLogic theGame;
 
     @FXML
-    private Button gb0; 
+    private Label topLabel;
+    @FXML
+    private RadioButton humanFirst;
+    @FXML
+    private RadioButton aiFirst;
+    @FXML
+    private Label bottomLabel;
+    @FXML
+    private Button gb0;
     @FXML
     private Button gb1;
     @FXML
@@ -43,6 +54,16 @@ public class UserInterface implements Initializable {
     private Button playLocalButton, playServerButton, restartButton;
     @FXML
     private Checkbox firstMoveCheck;
+    @FXML
+    private CheckBox deathMatchCheck;
+    @FXML
+    private TextField serverAddress;
+    @FXML
+    private TextField portNumber;
+    @FXML
+    private TextField timeout;
+    @FXML
+    private TextField teamID;
 
     @FXML
     /**
@@ -62,17 +83,49 @@ public class UserInterface implements Initializable {
             //pressed.setDisable(true);
         } else if (pressed.getId().matches("restartButton")) {
             resetButtonAction(pressed);
+        } else if (pressed.getId().matches("playLocalButton")) {
+            System.out.println("Play Local");
+            localMatch = true;
+            startGame();
+        }
+
+    }
+
+    @FXML
+    private void handleCheckAction(ActionEvent event) {
+        CheckBox checked = (CheckBox) event.getSource();
+        if (checked.getId().matches("firstMoveCheck")) {
+            System.out.println("I heard firstMoveCheck");
+            aiFirstMove = true;
+        } else if (checked.getId().matches("deathMatchCheck")) {
+            System.out.println("I heard deathMatchCheck:" + isDeathMatch);
+            isDeathMatch = (isDeathMatch) ? false : true;
+            System.out.println("deathMatchCheck After:" + isDeathMatch);
+        }
+
+    }
+
+    @FXML
+    private void handleRadioButton(ActionEvent event) {
+        RadioButton clicked = (RadioButton) event.getSource();
+        if (clicked.getText().matches("AI First")) {
+            aiFirstMove = true;
+            System.out.println("aiFirstMove: " + aiFirstMove);
+        } else {
+            aiFirstMove = false;
+            System.out.println("aiFirstMove: " + aiFirstMove);
         }
 
     }
 
     @FXML
     private void resetButtonAction(Button pressed) {
-        System.out.println("I Ran!");
+        System.out.println("ResetButtonAction: I Ran!");
         theGame = new GameLogic(this);
         for (int i = 0; i < 9; i++) {
-            //   getButton(i).setDisable(false);
-            // getButton(i).setText("");
+            Button toReset = getButton(i);
+            getButton(i).setDisable(false);
+            getButton(i).setText("");
 
         }
 
@@ -84,11 +137,11 @@ public class UserInterface implements Initializable {
      * @param pressed
      */
     private void gameButtonAction(Button pressed) {
-        //Position trims off the "gb" prefix in the button name 
+        //Position trims off the "gb" prefix in the button name
         //and just gets the index number.
         int position = Integer.parseInt(pressed.getId().substring(2));
         System.out.println("Position: " + position);
-      //  pressed.setText(theGame.getCurrentPlayer().toString());
+        //  pressed.setText(theGame.getCurrentPlayer().toString());
         this.theGame.userMove(position);
         //pressed.setDisable(true);
         theGame.aiMove();
@@ -109,6 +162,7 @@ public class UserInterface implements Initializable {
         //}
 
     }
+
     @FXML
     private void setButton(int index, String S) {
         switch (index) {
@@ -135,6 +189,7 @@ public class UserInterface implements Initializable {
             case 5:
                 this.gb5.setText(S);
                 this.gb5.setDisable(true);
+                break;
             case 6:
                 this.gb6.setText(S);
                 this.gb6.setDisable(true);
@@ -154,18 +209,78 @@ public class UserInterface implements Initializable {
 
     }
 
+    private Button getButton(int index) {
+        switch (index) {
+            case 0:
+                return gb0;
+            case 1:
+                return gb1;
+            case 2:
+                return gb2;
+            case 3:
+                return gb3;
+            case 4:
+                return gb4;
+            case 5:
+                return gb5;
+            case 6:
+                return gb6;
+            case 7:
+                return gb7;
+            case 8:
+                return gb8;
+            default:
+                System.out.println("USERINTERFACE:setButton " + index);
+                throw new RuntimeException("UserInterface:getButton: index out of range!");
+        }
+
+    }
+
+    public void setMessage(String s) {
+        topLabel.setText(s);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         theGame = new GameLogic(this);
-      /*  gb0 = new Button();
-        gb1 = new Button();
-        gb2 = new Button();
-        gb3 = new Button();
-        gb4 = new Button();
-        gb5 = new Button();
-        gb6 = new Button();
-        gb7 = new Button();
-        gb8 = new Button();*/
+        setMessage("Select a Game to Begin!");
+        for (int i = 0; i < 9; i++) {
+            Button toDisable = getButton(i);
+            toDisable.setDisable(true);
+        }
+
+    }
+
+    private void startGame() {
+        System.out.println("StartGame: ");
+        theGame = new GameLogic(this);
+        if (localMatch) {//Play Locally
+                    System.out.println("StartGame: Local Match ");
+            for (int i = 0; i < 9; i++) {
+                Button toReset = getButton(i);
+                getButton(i).setDisable(false);
+                getButton(i).setText("");
+
+            }
+            if (aiFirstMove) {
+                theGame.aiMove();
+            }
+
+        }else{  //Play Server Game
+        
+        
+        
+        }
+    }
+
+    public void gameOver(String Message) {
+        for (int i = 0; i < 9; i++) {
+            Button toDisable = getButton(i);
+            toDisable.setDisable(true);
+        }
+        topLabel.setText(Message);
+        bottomLabel.setText("Game Over");
 
     }
 
