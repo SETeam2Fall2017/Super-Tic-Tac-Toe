@@ -111,6 +111,9 @@ public class GameBoard {
         if (moveCount == BOARD_WIDTH * BOARD_WIDTH) {
             winner = State.Blank;
             gameOver = true;
+            if(parent != null){
+                parent.gameTie();
+            }
         }
 
         // Check for a winner.

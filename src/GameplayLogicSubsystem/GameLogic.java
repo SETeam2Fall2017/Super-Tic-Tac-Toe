@@ -57,4 +57,8 @@ public class GameLogic {
         UI.gameOver("Winner is " + player);
     }
     
+    public void gameTie(){
+        UI.gameOver("Game is a tie!");
+    
+    }
 }

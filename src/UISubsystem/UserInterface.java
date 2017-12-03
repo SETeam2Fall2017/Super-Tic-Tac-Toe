@@ -121,13 +121,14 @@ public class UserInterface implements Initializable {
     @FXML
     private void resetButtonAction(Button pressed) {
         System.out.println("ResetButtonAction: I Ran!");
-        theGame = new GameLogic(this);
+     /*   theGame = new GameLogic(this);
         for (int i = 0; i < 9; i++) {
             Button toReset = getButton(i);
             getButton(i).setDisable(false);
             getButton(i).setText("");
 
-        }
+        }*/
+     this.startGame();
 
     }
 
@@ -249,14 +250,17 @@ public class UserInterface implements Initializable {
             Button toDisable = getButton(i);
             toDisable.setDisable(true);
         }
+        this.restartButton.setDisable(true);
 
     }
 
     private void startGame() {
         System.out.println("StartGame: ");
+        this.restartButton.setDisable(false);
+        this.setMessage("Play Game!");
         theGame = new GameLogic(this);
         if (localMatch) {//Play Locally
-                    System.out.println("StartGame: Local Match ");
+            System.out.println("StartGame: Local Match ");
             for (int i = 0; i < 9; i++) {
                 Button toReset = getButton(i);
                 getButton(i).setDisable(false);
