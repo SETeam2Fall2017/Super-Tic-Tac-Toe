@@ -6,8 +6,6 @@
 package UISubsystem;
 
 import GameplayLogicSubsystem.GameBoard;
-import UISubsystem.UIWindow;
-import java.awt.PopupMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +15,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author elchapo
+ * @author jon
  */
 public class UISubsytem extends Application {
     
@@ -38,7 +36,11 @@ public class UISubsytem extends Application {
     
     public static void main(String[] args) {
       launch(args);
+      
+      
     }
+    
+  
 
 
 }
