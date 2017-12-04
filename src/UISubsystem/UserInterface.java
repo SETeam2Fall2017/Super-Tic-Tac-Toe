@@ -259,6 +259,7 @@ public class UserInterface implements Initializable {
         this.restartButton.setDisable(false);
         this.setMessage("Play Game!");
         theGame = new GameLogic(this);
+        if(deathMatchCheck.isSelected()){theGame.SetDeathMatch(); isDeathMatch=true;}
         if (localMatch) {//Play Locally
             System.out.println("StartGame: Local Match ");
             for (int i = 0; i < 9; i++) {
@@ -286,6 +287,20 @@ public class UserInterface implements Initializable {
         topLabel.setText(Message);
         bottomLabel.setText("Game Over");
 
+    }
+    public void  swapButtons(int from, int to){
+    Button f = getButton(from);
+    Button t = getButton(to);
+    Button holder = new Button();
+    holder.setText(f.getText());
+    holder.setDisable(f.isDisable());
+    f.setText(t.getText());
+    f.setDisable(t.isDisable());
+    t.setText(holder.getText());
+    t.setDisable(holder.isDisable());
+    
+    
+    
     }
 
 }

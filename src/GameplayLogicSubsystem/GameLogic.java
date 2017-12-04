@@ -16,6 +16,7 @@ public class GameLogic {
     MiniMax miniMax;
     MiniMaxDeathMatch miniDeath;
     UserInterface UI;
+    Boolean isDeathMatch;
     
     /**
      *Pass the UserInterface to the logic subsystem so the Logic system can 
@@ -52,6 +53,10 @@ public class GameLogic {
     
     }
     
+    public void shift(int current, int empty){
+    
+    }
+    
     public void gameOver(String player){
         
         UI.gameOver("Winner is " + player);
@@ -59,6 +64,10 @@ public class GameLogic {
     
     public void gameTie(){
         UI.gameOver("Game is a tie!");
+    
+    }
+    public void SetDeathMatch(){
+        theGame.setDeathMatch(true);
     
     }
 }
