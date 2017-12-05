@@ -62,10 +62,10 @@ public class MiniMaxDeathMatch extends MiniMax {
         double bestScore = Double.NEGATIVE_INFINITY;
         int indexOfBestMove = -1;
 
-        for (Integer theMove : board.getAvailableMoves()) {
+        for (Integer theMove : board.deathMatchMoves()) {
 
             GameBoard modifiedBoard = board.getDeepCopy();
-            modifiedBoard.move(theMove);
+            modifiedBoard.shift(modifiedBoard.getBlank(), theMove);
 
             int score = miniMax(player, modifiedBoard, currentPly);
 
@@ -76,7 +76,7 @@ public class MiniMaxDeathMatch extends MiniMax {
 
         }
 
-        board.move(indexOfBestMove);
+        board.shift(board.getBlank(), indexOfBestMove);
         return (int)bestScore;
     }
 
@@ -91,10 +91,10 @@ public class MiniMaxDeathMatch extends MiniMax {
         double bestScore = Double.POSITIVE_INFINITY;
         int indexOfBestMove = -1;
 
-        for (Integer theMove : board.getAvailableMoves()) {
+        for (Integer theMove : board.deathMatchMoves()) {
 
             GameBoard modifiedBoard = board.getDeepCopy();
-            modifiedBoard.move(theMove);
+            modifiedBoard.shift(modifiedBoard.getBlank(), theMove);
 
             int score = miniMax(player, modifiedBoard, currentPly);
 
@@ -105,7 +105,7 @@ public class MiniMaxDeathMatch extends MiniMax {
 
         }
 
-        board.move(indexOfBestMove);
+        //board.shift(board.getBlank(), indexOfBestMove);
         return (int)bestScore;
     }
 

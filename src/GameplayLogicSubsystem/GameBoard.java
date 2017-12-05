@@ -17,7 +17,9 @@ public class GameBoard {
     private State playersTurn;
     private State winner;
     private HashSet<Integer> movesAvailable;
+    private HashSet<Integer> deathMatchMovesAvailable;
     private int moveCount;
+    public int theBlank;
     private boolean gameOver;
     private GameLogic parent = null;
 
@@ -27,15 +29,19 @@ public class GameBoard {
     GameBoard(GameLogic p) {
         board = new State[BOARD_WIDTH][BOARD_WIDTH];
         movesAvailable = new HashSet<>();
+        deathMatchMovesAvailable = new HashSet<>();
         parent = p;
         deathMatch = false;
+        theBlank = -1;
         reset();
     }
 
-    GameBoard() {
+    public GameBoard() {
         board = new State[BOARD_WIDTH][BOARD_WIDTH];
         movesAvailable = new HashSet<>();
+        deathMatchMovesAvailable = new HashSet<>();
         deathMatch = false;
+        theBlank = -1;
         reset();
     }
 
@@ -90,10 +96,6 @@ public class GameBoard {
             parent.updateUI(index);
         }
         return move(index % BOARD_WIDTH, index / BOARD_WIDTH);
-
-    }
-
-    public void shift() {
 
     }
 
@@ -292,10 +294,15 @@ public class GameBoard {
         newBoard.movesAvailable.addAll(this.movesAvailable);
         newBoard.moveCount = this.moveCount;
         newBoard.gameOver = this.gameOver;
+        newBoard.theBlank = this.theBlank;
+        newBoard.deathMatch = this.deathMatch;
         return newBoard;
     }
 
     @Override
+    /**
+     * Returns a string object that represents the gameboard.
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
@@ -316,6 +323,201 @@ public class GameBoard {
         }
 
         return new String(sb);
+    }
+
+    public void shift(int blank, int pos) {
+
+        if (parent != null) {
+            System.out.println("Before Shift: ");
+            System.out.println(this.toString());
+        }
+        State Holder = State.Blank;
+        board[blank / BOARD_WIDTH][blank % BOARD_WIDTH] = board[pos / BOARD_WIDTH][pos % BOARD_WIDTH];
+        board[pos / BOARD_WIDTH][pos % BOARD_WIDTH] = Holder;
+        theBlank = pos;
+        if (parent != null) {
+            parent.shift(pos, blank);
+            System.out.println("After Shift: ");
+            System.out.println(this.toString());
+        }
+
+        moveCount++;
+
+        // Check for a winner.
+        checkRow(blank / BOARD_WIDTH);
+        checkColumn(blank % BOARD_WIDTH);
+        checkDiagonalFromTopLeft(blank % BOARD_WIDTH, blank / BOARD_WIDTH);
+        checkDiagonalFromTopRight(blank % BOARD_WIDTH, blank / BOARD_WIDTH);
+
+        playersTurn = (playersTurn == State.X) ? State.O : State.X;
+
+    }
+
+    public State playerAt(int i) {
+        State p = State.Blank;
+
+        switch (i) {
+            case 0:
+                p = this.board[0][0];
+                break;
+            case 1:
+                p = this.board[0][1];
+                break;
+            case 2:
+                p = this.board[0][2];
+                break;
+            case 3:
+                p = this.board[1][0];
+                break;
+            case 4:
+                p = this.board[1][1];
+                break;
+            case 5:
+                p = this.board[1][2];
+                break;
+            case 6:
+                p = this.board[2][0];
+                break;
+            case 7:
+                p = this.board[2][1];
+                break;
+            case 8:
+                p = this.board[2][2];
+                break;
+            default:
+                throw new IllegalStateException("Problem in Player At!");
+        }
+
+        return p;
+
+    }
+
+    public int getBlank() {
+        int temp = -1;
+        for (int y = 0; y < BOARD_WIDTH; y++) {
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                if (board[y][x] == State.Blank) {
+                    if (temp != -1) {
+                        throw new IllegalStateException("Problem in getBlank!");
+                    }
+                    temp = y * BOARD_WIDTH + x;
+                }
+            }
+        }
+
+        return temp;
+    }
+
+    public HashSet<Integer> deathMatchMoves() {
+        HashSet<Integer> adjacent = new HashSet<>();
+        adjacent.clear();
+        int blank = this.getBlank();
+        theBlank = this.getBlank();
+        if (!deathMatch) {
+            throw new IllegalStateException("Problem in Deathmatch Moves!");
+        }
+
+        switch (blank) {
+            case 0:
+                if (this.getTurn() == this.playerAt(1)) {
+                    adjacent.add(1);
+                }
+                if (this.getTurn() == this.playerAt(3)) {
+                    adjacent.add(3);
+                }
+                if (this.getTurn() == this.playerAt(4)) {
+                    adjacent.add(4);
+                }
+                break;
+            case 1:
+                if (this.getTurn() == this.playerAt(0)) {
+                    adjacent.add(0);
+                }
+                if (this.getTurn() == this.playerAt(2)) {
+                    adjacent.add(2);
+                }
+                if (this.getTurn() == this.playerAt(4)) {
+                    adjacent.add(4);
+                }
+                break;
+            case 2:
+                if (this.getTurn() == this.playerAt(1)) {
+                    adjacent.add(1);
+                }
+                if (this.getTurn() == this.playerAt(4)) {
+                    adjacent.add(4);
+                }
+                if (this.getTurn() == this.playerAt(5)) {
+                    adjacent.add(5);
+                }
+                break;
+            case 3:
+                if (this.getTurn() == this.playerAt(0)) {
+                    adjacent.add(0);
+                }
+                if (this.getTurn() == this.playerAt(4)) {
+                    adjacent.add(4);
+                }
+                if (this.getTurn() == this.playerAt(6)) {
+                    adjacent.add(6);
+                }
+                break;
+            case 4:if (this.getTurn() == this.playerAt(0)) {
+                adjacent.add(0);}
+            if (this.getTurn() == this.playerAt(1)) {
+                adjacent.add(1);}
+            if (this.getTurn() == this.playerAt(2)) {
+                adjacent.add(2);}
+            if (this.getTurn() == this.playerAt(3)) {
+                adjacent.add(3);}
+            if (this.getTurn() == this.playerAt(5)) {
+                adjacent.add(5);}
+            if (this.getTurn() == this.playerAt(6)) {
+                adjacent.add(6);}
+            if (this.getTurn() == this.playerAt(7)) {
+                adjacent.add(7);}
+            if (this.getTurn() == this.playerAt(8)) {
+                adjacent.add(8);}
+                break;
+            case 5:
+                if (this.getTurn() == this.playerAt(2)) {
+                adjacent.add(2);}
+                if (this.getTurn() == this.playerAt(4)) {
+                adjacent.add(4);}
+                if (this.getTurn() == this.playerAt(8)) {
+                adjacent.add(8);}
+                break;
+            case 6:
+                if (this.getTurn() == this.playerAt(3)) {
+                adjacent.add(3);}
+                if (this.getTurn() == this.playerAt(4)) {
+                adjacent.add(4);}
+                if (this.getTurn() == this.playerAt(7)) {
+                adjacent.add(7);}
+                break;
+            case 7:
+                if (this.getTurn() == this.playerAt(6)) {
+                adjacent.add(6);}
+                if (this.getTurn() == this.playerAt(4)) {
+                adjacent.add(4);}
+                if (this.getTurn() == this.playerAt(8)) {
+                adjacent.add(8);}
+                break;
+            case 8:
+                if (this.getTurn() == this.playerAt(4)) {
+                adjacent.add(4);}
+                if (this.getTurn() == this.playerAt(5)) {
+                adjacent.add(5);}
+                if (this.getTurn() == this.playerAt(7)) {
+                adjacent.add(7);}
+                break;
+            default:
+                throw new IllegalStateException("Problem in Deathmatch Moves!");
+
+        }
+
+        return adjacent;
+
     }
 
 }

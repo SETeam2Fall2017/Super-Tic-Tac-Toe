@@ -14,6 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import java.lang.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +26,7 @@ public class UserInterface implements Initializable {
 
     private boolean localMatch, aiFirstMove, isDeathMatch;
     private GameLogic theGame;
+    private GameBoard testBoard;
 
     @FXML
     private Label topLabel;
@@ -121,14 +125,14 @@ public class UserInterface implements Initializable {
     @FXML
     private void resetButtonAction(Button pressed) {
         System.out.println("ResetButtonAction: I Ran!");
-     /*   theGame = new GameLogic(this);
+        /*   theGame = new GameLogic(this);
         for (int i = 0; i < 9; i++) {
             Button toReset = getButton(i);
             getButton(i).setDisable(false);
             getButton(i).setText("");
 
         }*/
-     this.startGame();
+        this.startGame();
 
     }
 
@@ -142,11 +146,23 @@ public class UserInterface implements Initializable {
         //and just gets the index number.
         int position = Integer.parseInt(pressed.getId().substring(2));
         System.out.println("Position: " + position);
-        //  pressed.setText(theGame.getCurrentPlayer().toString());
-        this.theGame.userMove(position);
-        //pressed.setDisable(true);
-        theGame.aiMove();
+        if (isDeathMatch && theGame.getMoveCount() > 7) {
+            
+            this.theGame.shift(position, theGame.getBlank());
+            this.enableHumanButtons();
 
+        } else {
+            this.theGame.userMove(position);
+        }
+        //pressed.setDisable(true);
+        if (isDeathMatch && theGame.getMoveCount() > 7) {
+            theGame.aiDeathMove();
+            this.enableHumanButtons();
+        } else {
+            theGame.aiMove();
+        }
+        
+        
         //Implement move below
     }
 
@@ -245,12 +261,14 @@ public class UserInterface implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         theGame = new GameLogic(this);
+        testBoard = new GameBoard();
         setMessage("Select a Game to Begin!");
         for (int i = 0; i < 9; i++) {
             Button toDisable = getButton(i);
             toDisable.setDisable(true);
         }
         this.restartButton.setDisable(true);
+        System.out.println(testBoard.getAvailableMoves().toString());
 
     }
 
@@ -259,7 +277,10 @@ public class UserInterface implements Initializable {
         this.restartButton.setDisable(false);
         this.setMessage("Play Game!");
         theGame = new GameLogic(this);
-        if(deathMatchCheck.isSelected()){theGame.SetDeathMatch(); isDeathMatch=true;}
+        if (deathMatchCheck.isSelected()) {
+            theGame.SetDeathMatch();
+            isDeathMatch = true;
+        }
         if (localMatch) {//Play Locally
             System.out.println("StartGame: Local Match ");
             for (int i = 0; i < 9; i++) {
@@ -272,10 +293,8 @@ public class UserInterface implements Initializable {
                 theGame.aiMove();
             }
 
-        }else{  //Play Server Game
-        
-        
-        
+        } else {  //Play Server Game
+
         }
     }
 
@@ -288,19 +307,58 @@ public class UserInterface implements Initializable {
         bottomLabel.setText("Game Over");
 
     }
-    public void  swapButtons(int from, int to){
-    Button f = getButton(from);
-    Button t = getButton(to);
-    Button holder = new Button();
-    holder.setText(f.getText());
-    holder.setDisable(f.isDisable());
-    f.setText(t.getText());
-    f.setDisable(t.isDisable());
-    t.setText(holder.getText());
-    t.setDisable(holder.isDisable());
-    
-    
-    
+
+    public void swapButtons(int from, int to) {
+        Button f = getButton(from);
+        Button t = getButton(to);
+        Button holder = new Button();
+        holder.setText(f.getText());
+        holder.setDisable(f.isDisable());
+        f.setText(t.getText());
+        f.setDisable(t.isDisable());
+        t.setText(holder.getText());
+        t.setDisable(holder.isDisable());
+
+    }
+
+    public void enableHumanButtons() {
+        for (int i = 0; i < 9; i++) {
+            Button toReset = getButton(i);
+            if (aiFirstMove) {
+                if (toReset.getText().matches("O")) {
+                    toReset.setDisable(false);
+                }
+                if (toReset.getText().matches("X")) {
+                    toReset.setDisable(true);
+                }
+            } else {
+                if (toReset.getText().matches("O")) {
+                    toReset.setDisable(true);
+                }
+                if (toReset.getText().matches("X")) {
+                    toReset.setDisable(false);
+                }
+            }
+
+        }
+    }
+
+    public void disableField(boolean B) {
+        if (B) {
+            for (int i = 0; i < 9; i++) {
+                Button toReset = getButton(i);
+                toReset.setDisable(B);
+
+            }
+        } else {
+            for (int i = 0; i < 9; i++) {
+                Button toReset = getButton(i);
+                if (toReset.getText().matches("")) {
+                    toReset.setDisable(B);
+                }
+
+            }
+        }
     }
 
 }

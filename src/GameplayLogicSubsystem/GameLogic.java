@@ -17,6 +17,7 @@ public class GameLogic {
     MiniMaxDeathMatch miniDeath;
     UserInterface UI;
     Boolean isDeathMatch;
+    int moveCount;
     
     /**
      *Pass the UserInterface to the logic subsystem so the Logic system can 
@@ -26,13 +27,24 @@ public class GameLogic {
     public GameLogic(UserInterface U){
         UI = U;
         theGame = new GameBoard(this);
+        moveCount =0;
         
     }
     
     public void aiMove(){
         System.out.println("GAMELOGIC:aiMove");
+        if(moveCount == 0){
+            theGame.move(4);
+        }
+        else{
         MiniMax.run(theGame.getTurn(), theGame, 6);
-    
+        }
+    moveCount++;
+    }
+    public void aiDeathMove(){
+        System.out.println("GAMELOGIC:aiDeathMove");
+        MiniMaxDeathMatch.run(theGame.getTurn(), theGame, 6);
+        moveCount++;
     }
     
     public GameBoard.State getCurrentPlayer(){
@@ -44,6 +56,7 @@ public class GameLogic {
         theGame.move(index);
         System.out.println("GAMELOGIC:USER MOVE: " + index);
         System.out.print(theGame.toString());
+        moveCount++;
 
         
     }
@@ -53,8 +66,10 @@ public class GameLogic {
     
     }
     
-    public void shift(int current, int empty){
+    public int getMoveCount(){return moveCount;}
     
+    public void shift(int current, int empty){
+        UI.swapButtons(current, empty);
     }
     
     public void gameOver(String player){
@@ -70,4 +85,8 @@ public class GameLogic {
         theGame.setDeathMatch(true);
     
     }
+    public int getBlank(){
+        return theGame.getBlank();
+    }
+    
 }
