@@ -42,7 +42,7 @@ public class GameLogic {
         if (isDeathMatch && moveCount == 0) {
             theGameBoard.move(4);
         } else {
-            miniMax.run(theGameBoard.getTurn(), theGameBoard, 6);
+            miniMax.run(theGameBoard.getTurn(), theGameBoard, 99);
         }
         moveCount++;
     }
