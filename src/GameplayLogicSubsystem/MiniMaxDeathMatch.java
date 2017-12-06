@@ -5,11 +5,13 @@
  */
 package GameplayLogicSubsystem;
 
+import java.util.HashSet;
+
 /**
  *
  * @author elchapo
  */
-public class MiniMaxDeathMatch extends MiniMax {
+public class MiniMaxDeathMatch{
      /**
      * MiniMax cannot be instantiated.
      */
@@ -42,11 +44,11 @@ public class MiniMaxDeathMatch extends MiniMax {
         if (currentPly++ == maxPly || board.isGameOver()) {
             return score(player, board);
         }
-
+        int level = 0;
         if (board.getTurn() == player) {
-            return getMax(player, board, currentPly);
+            return getMax(player, board, currentPly, level);
         } else {
-            return getMin(player, board, currentPly);
+            return getMin(player, board, currentPly, level);
         }
 
     }
@@ -58,12 +60,13 @@ public class MiniMaxDeathMatch extends MiniMax {
      * @param currentPly    the current depth
      * @return              the score of the board
      */
-    private static int getMax (GameBoard.State player, GameBoard board, int currentPly) {
+    private static int getMax (GameBoard.State player, GameBoard board, int currentPly, int level) {
         double bestScore = Double.NEGATIVE_INFINITY;
         int indexOfBestMove = -1;
-
-        for (Integer theMove : board.deathMatchMoves()) {
-
+        level++;
+        HashSet<Integer> movesPossible = board.deathMatchMoves();
+        for (Integer theMove : movesPossible) {
+           
             GameBoard modifiedBoard = board.getDeepCopy();
             modifiedBoard.shift(modifiedBoard.getBlank(), theMove);
 
@@ -87,12 +90,12 @@ public class MiniMaxDeathMatch extends MiniMax {
      * @param currentPly    the current depth
      * @return              the score of the board
      */
-    private static int getMin (GameBoard.State player, GameBoard board, int currentPly) {
+    private static int getMin (GameBoard.State player, GameBoard board, int currentPly, int level) {
         double bestScore = Double.POSITIVE_INFINITY;
         int indexOfBestMove = -1;
-
-        for (Integer theMove : board.deathMatchMoves()) {
-
+        HashSet<Integer> movesPossible = board.deathMatchMoves();
+        for (Integer theMove : movesPossible) {
+          //  System.out.println("Min: Level " + level + "theMove is " + theMove);
             GameBoard modifiedBoard = board.getDeepCopy();
             modifiedBoard.shift(modifiedBoard.getBlank(), theMove);
 
@@ -105,7 +108,7 @@ public class MiniMaxDeathMatch extends MiniMax {
 
         }
 
-        //board.shift(board.getBlank(), indexOfBestMove);
+        board.shift(board.getBlank(), indexOfBestMove);
         return (int)bestScore;
     }
 

@@ -12,7 +12,7 @@ import UISubsystem.UserInterface;
  * @author Jon
  */
 public class GameLogic {
-    GameBoard theGame;
+    GameBoard theGameBoard;
     MiniMax miniMax;
     MiniMaxDeathMatch miniDeath;
     UserInterface UI;
@@ -26,43 +26,57 @@ public class GameLogic {
      */
     public GameLogic(UserInterface U){
         UI = U;
-        theGame = new GameBoard(this);
+        theGameBoard = new GameBoard(this);
         moveCount =0;
+        isDeathMatch = false;
+        miniDeath = new   MiniMaxDeathMatch();
+        miniMax = new MiniMax();
         
     }
     
     public void aiMove(){
         System.out.println("GAMELOGIC:aiMove");
-        if(moveCount == 0){
-            theGame.move(4);
+        if(isDeathMatch && moveCount == 0){
+         theGameBoard.move(4);
         }
         else{
-        MiniMax.run(theGame.getTurn(), theGame, 6);
+        miniMax.run(theGameBoard.getTurn(), theGameBoard, 6);
         }
     moveCount++;
     }
     public void aiDeathMove(){
         System.out.println("GAMELOGIC:aiDeathMove");
-        MiniMaxDeathMatch.run(theGame.getTurn(), theGame, 6);
+        miniDeath.run(theGameBoard.getTurn(), theGameBoard, 2);
+       // System.out.println(theGameBoard.toString());
         moveCount++;
     }
     
+    public boolean checkWin(){
+        if(theGameBoard.isGameOver()){
+            UI.setMessage("GAME OVER");
+            UI.disableField(true);
+            return true;
+        }
+        else return false;
+    }
+    
     public GameBoard.State getCurrentPlayer(){
-        return theGame.getTurn();
+        return theGameBoard.getTurn();
     }
     
     public void userMove(int index){
         updateUI(index);
-        theGame.move(index);
+        theGameBoard.move(index);
         System.out.println("GAMELOGIC:USER MOVE: " + index);
-        System.out.print(theGame.toString());
+        System.out.print(theGameBoard.toString());
+        this.checkWin();
         moveCount++;
 
         
     }
     
     public void updateUI(int Index){
-        UI.updateBoard(Index, this.theGame.getTurn());
+        UI.updateBoard(Index, this.theGameBoard.getTurn());
     
     }
     
@@ -70,6 +84,11 @@ public class GameLogic {
     
     public void shift(int current, int empty){
         UI.swapButtons(current, empty);
+        
+    }
+    public void humanShift(int current, int empty){
+        this.theGameBoard.shift(empty, current);
+        //UI.swapButtons(current, empty);
     }
     
     public void gameOver(String player){
@@ -81,12 +100,13 @@ public class GameLogic {
         UI.gameOver("Game is a tie!");
     
     }
-    public void SetDeathMatch(){
-        theGame.setDeathMatch(true);
+    public void SetDeathMatch(boolean val){
+        theGameBoard.setDeathMatch(val);
+        isDeathMatch = val;
     
     }
     public int getBlank(){
-        return theGame.getBlank();
+        return theGameBoard.getBlank();
     }
     
 }

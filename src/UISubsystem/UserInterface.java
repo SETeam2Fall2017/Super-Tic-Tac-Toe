@@ -81,10 +81,9 @@ public class UserInterface implements Initializable {
         Button pressed = (Button) event.getSource();
         System.out.println(pressed.getId() + ": You clicked me!");
         if (pressed.getId().matches("gb[0-9]")) {
-            System.out.println("regex l33t god");
-            // pressed.setText(LocalDateTime.now().toString());
+
             gameButtonAction(pressed);
-            //pressed.setDisable(true);
+
         } else if (pressed.getId().matches("restartButton")) {
             resetButtonAction(pressed);
         } else if (pressed.getId().matches("playLocalButton")) {
@@ -147,22 +146,28 @@ public class UserInterface implements Initializable {
         int position = Integer.parseInt(pressed.getId().substring(2));
         System.out.println("Position: " + position);
         if (isDeathMatch && theGame.getMoveCount() > 7) {
-            
-            this.theGame.shift(position, theGame.getBlank());
+
+            this.theGame.humanShift(position, theGame.getBlank());
+            if (this.theGame.checkWin()) {
+                //this.setMessage();
+                this.gameOver("Winner is" + theGame.getCurrentPlayer());
+
+            }
             this.enableHumanButtons();
 
         } else {
             this.theGame.userMove(position);
         }
-        //pressed.setDisable(true);
         if (isDeathMatch && theGame.getMoveCount() > 7) {
             theGame.aiDeathMove();
             this.enableHumanButtons();
         } else {
             theGame.aiMove();
+            if (isDeathMatch && theGame.getMoveCount() > 7) {
+                this.enableHumanButtons();
+            }
         }
-        
-        
+
         //Implement move below
     }
 
@@ -278,7 +283,7 @@ public class UserInterface implements Initializable {
         this.setMessage("Play Game!");
         theGame = new GameLogic(this);
         if (deathMatchCheck.isSelected()) {
-            theGame.SetDeathMatch();
+            theGame.SetDeathMatch(true);
             isDeathMatch = true;
         }
         if (localMatch) {//Play Locally
@@ -308,38 +313,44 @@ public class UserInterface implements Initializable {
 
     }
 
-    public void swapButtons(int from, int to) {
+    public void swapButtons(int from, int blank) {
         Button f = getButton(from);
-        Button t = getButton(to);
-        Button holder = new Button();
-        holder.setText(f.getText());
-        holder.setDisable(f.isDisable());
+        Button t = getButton(blank);
+        String holdText = f.getText();
+        boolean holdDis = f.isDisabled();
+
         f.setText(t.getText());
         f.setDisable(t.isDisable());
-        t.setText(holder.getText());
-        t.setDisable(holder.isDisable());
+        t.setText(holdText);
+        t.setDisable(holdDis);
 
     }
 
     public void enableHumanButtons() {
-        for (int i = 0; i < 9; i++) {
-            Button toReset = getButton(i);
-            if (aiFirstMove) {
-                if (toReset.getText().matches("O")) {
-                    toReset.setDisable(false);
-                }
-                if (toReset.getText().matches("X")) {
+        if (!this.theGame.checkWin()) {
+            for (int i = 0; i < 9; i++) {
+                Button toReset = getButton(i);
+                if (toReset.getText().matches("")) {
                     toReset.setDisable(true);
                 }
-            } else {
-                if (toReset.getText().matches("O")) {
-                    toReset.setDisable(true);
-                }
-                if (toReset.getText().matches("X")) {
-                    toReset.setDisable(false);
-                }
-            }
 
+                if (aiFirstMove) {
+                    if (toReset.getText().matches("O")) {
+                        toReset.setDisable(false);
+                    }
+                    if (toReset.getText().matches("X")) {
+                        toReset.setDisable(true);
+                    }
+                } else {
+                    if (toReset.getText().matches("X")) {
+                        toReset.setDisable(false);
+                    }
+                    if (toReset.getText().matches("O")) {
+                        toReset.setDisable(true);
+                    }
+                }
+
+            }
         }
     }
 

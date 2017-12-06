@@ -17,7 +17,7 @@ public class GameBoard {
     private State playersTurn;
     private State winner;
     private HashSet<Integer> movesAvailable;
-    private HashSet<Integer> deathMatchMovesAvailable;
+    public HashSet<Integer> deathMatchMovesAvailable;
     private int moveCount;
     public int theBlank;
     private boolean gameOver;
@@ -326,7 +326,9 @@ public class GameBoard {
     }
 
     public void shift(int blank, int pos) {
-
+        if(blank == -1 || pos == -1){
+            throw new IllegalStateException("GameBoard:Shift Array Out of Bounds!");
+        }
         if (parent != null) {
             System.out.println("Before Shift: ");
             System.out.println(this.toString());
@@ -409,8 +411,8 @@ public class GameBoard {
     }
 
     public HashSet<Integer> deathMatchMoves() {
-        HashSet<Integer> adjacent = new HashSet<>();
-        adjacent.clear();
+        deathMatchMovesAvailable = new HashSet<>();
+        deathMatchMovesAvailable.clear();
         int blank = this.getBlank();
         theBlank = this.getBlank();
         if (!deathMatch) {
@@ -420,103 +422,124 @@ public class GameBoard {
         switch (blank) {
             case 0:
                 if (this.getTurn() == this.playerAt(1)) {
-                    adjacent.add(1);
+                    deathMatchMovesAvailable.add(1);
                 }
                 if (this.getTurn() == this.playerAt(3)) {
-                    adjacent.add(3);
+                    deathMatchMovesAvailable.add(3);
                 }
                 if (this.getTurn() == this.playerAt(4)) {
-                    adjacent.add(4);
+                    deathMatchMovesAvailable.add(4);
                 }
                 break;
             case 1:
                 if (this.getTurn() == this.playerAt(0)) {
-                    adjacent.add(0);
+                    deathMatchMovesAvailable.add(0);
                 }
                 if (this.getTurn() == this.playerAt(2)) {
-                    adjacent.add(2);
+                    deathMatchMovesAvailable.add(2);
                 }
                 if (this.getTurn() == this.playerAt(4)) {
-                    adjacent.add(4);
+                    deathMatchMovesAvailable.add(4);
                 }
                 break;
             case 2:
                 if (this.getTurn() == this.playerAt(1)) {
-                    adjacent.add(1);
+                    deathMatchMovesAvailable.add(1);
                 }
                 if (this.getTurn() == this.playerAt(4)) {
-                    adjacent.add(4);
+                    deathMatchMovesAvailable.add(4);
                 }
                 if (this.getTurn() == this.playerAt(5)) {
-                    adjacent.add(5);
+                    deathMatchMovesAvailable.add(5);
                 }
                 break;
             case 3:
                 if (this.getTurn() == this.playerAt(0)) {
-                    adjacent.add(0);
+                    deathMatchMovesAvailable.add(0);
                 }
                 if (this.getTurn() == this.playerAt(4)) {
-                    adjacent.add(4);
+                    deathMatchMovesAvailable.add(4);
                 }
                 if (this.getTurn() == this.playerAt(6)) {
-                    adjacent.add(6);
+                    deathMatchMovesAvailable.add(6);
                 }
                 break;
-            case 4:if (this.getTurn() == this.playerAt(0)) {
-                adjacent.add(0);}
-            if (this.getTurn() == this.playerAt(1)) {
-                adjacent.add(1);}
-            if (this.getTurn() == this.playerAt(2)) {
-                adjacent.add(2);}
-            if (this.getTurn() == this.playerAt(3)) {
-                adjacent.add(3);}
-            if (this.getTurn() == this.playerAt(5)) {
-                adjacent.add(5);}
-            if (this.getTurn() == this.playerAt(6)) {
-                adjacent.add(6);}
-            if (this.getTurn() == this.playerAt(7)) {
-                adjacent.add(7);}
-            if (this.getTurn() == this.playerAt(8)) {
-                adjacent.add(8);}
+            case 4:
+                if (this.getTurn() == this.playerAt(0)) {
+                    deathMatchMovesAvailable.add(0);
+                }
+                if (this.getTurn() == this.playerAt(1)) {
+                    deathMatchMovesAvailable.add(1);
+                }
+                if (this.getTurn() == this.playerAt(2)) {
+                    deathMatchMovesAvailable.add(2);
+                }
+                if (this.getTurn() == this.playerAt(3)) {
+                    deathMatchMovesAvailable.add(3);
+                }
+                if (this.getTurn() == this.playerAt(5)) {
+                    deathMatchMovesAvailable.add(5);
+                }
+                if (this.getTurn() == this.playerAt(6)) {
+                    deathMatchMovesAvailable.add(6);
+                }
+                if (this.getTurn() == this.playerAt(7)) {
+                    deathMatchMovesAvailable.add(7);
+                }
+                if (this.getTurn() == this.playerAt(8)) {
+                    deathMatchMovesAvailable.add(8);
+                }
                 break;
             case 5:
                 if (this.getTurn() == this.playerAt(2)) {
-                adjacent.add(2);}
+                    deathMatchMovesAvailable.add(2);
+                }
                 if (this.getTurn() == this.playerAt(4)) {
-                adjacent.add(4);}
+                    deathMatchMovesAvailable.add(4);
+                }
                 if (this.getTurn() == this.playerAt(8)) {
-                adjacent.add(8);}
+                    deathMatchMovesAvailable.add(8);
+                }
                 break;
             case 6:
                 if (this.getTurn() == this.playerAt(3)) {
-                adjacent.add(3);}
+                    deathMatchMovesAvailable.add(3);
+                }
                 if (this.getTurn() == this.playerAt(4)) {
-                adjacent.add(4);}
+                    deathMatchMovesAvailable.add(4);
+                }
                 if (this.getTurn() == this.playerAt(7)) {
-                adjacent.add(7);}
+                    deathMatchMovesAvailable.add(7);
+                }
                 break;
             case 7:
                 if (this.getTurn() == this.playerAt(6)) {
-                adjacent.add(6);}
+                    deathMatchMovesAvailable.add(6);
+                }
                 if (this.getTurn() == this.playerAt(4)) {
-                adjacent.add(4);}
+                    deathMatchMovesAvailable.add(4);
+                }
                 if (this.getTurn() == this.playerAt(8)) {
-                adjacent.add(8);}
+                    deathMatchMovesAvailable.add(8);
+                }
                 break;
             case 8:
                 if (this.getTurn() == this.playerAt(4)) {
-                adjacent.add(4);}
+                    deathMatchMovesAvailable.add(4);
+                }
                 if (this.getTurn() == this.playerAt(5)) {
-                adjacent.add(5);}
+                    deathMatchMovesAvailable.add(5);
+                }
                 if (this.getTurn() == this.playerAt(7)) {
-                adjacent.add(7);}
+                    deathMatchMovesAvailable.add(7);
+                }
                 break;
             default:
                 throw new IllegalStateException("Problem in Deathmatch Moves!");
 
         }
 
-        return adjacent;
+        return deathMatchMovesAvailable;
 
     }
 
