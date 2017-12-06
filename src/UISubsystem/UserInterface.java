@@ -15,6 +15,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import java.lang.*;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -175,13 +176,6 @@ public class UserInterface implements Initializable {
     public void updateBoard(int buttonIndex, GameBoard.State state) {
         setButton(buttonIndex, state.toString());
         System.out.println("USERINTERFACE:updateBoard  " + buttonIndex + ": " + state.toString());
-        //To Implement:
-        //check that button is blank and update if that is true
-        //check if deathmatch and implement swap of buttons in that case
-        //To Implement if (toUpdate.getText().equals("")) {
-        //toUpdate.setText(state.toString());
-        //toUpdate.setDisable(true);
-        //}
 
     }
 
@@ -274,6 +268,7 @@ public class UserInterface implements Initializable {
         }
         this.restartButton.setDisable(true);
         System.out.println(testBoard.getAvailableMoves().toString());
+        this.bottomLabel.setText("");
 
     }
 
@@ -281,6 +276,7 @@ public class UserInterface implements Initializable {
         System.out.println("StartGame: ");
         this.restartButton.setDisable(false);
         this.setMessage("Play Game!");
+        this.bottomLabel.setText("");
         theGame = new GameLogic(this);
         if (deathMatchCheck.isSelected()) {
             theGame.SetDeathMatch(true);
@@ -333,23 +329,27 @@ public class UserInterface implements Initializable {
                 if (toReset.getText().matches("")) {
                     toReset.setDisable(true);
                 }
+                HashSet<Integer> toChange = theGame.getValidShift();
+                if (toChange.contains(i)) {
+                    {
+                        if (aiFirstMove) {
+                            if (toReset.getText().matches("O")) {
+                                toReset.setDisable(false);
+                            }
+                            if (toReset.getText().matches("X")) {
+                                toReset.setDisable(true);
+                            }
+                        } else {
+                            if (toReset.getText().matches("X")) {
+                                toReset.setDisable(false);
+                            }
+                            if (toReset.getText().matches("O")) {
+                                toReset.setDisable(true);
+                            }
 
-                if (aiFirstMove) {
-                    if (toReset.getText().matches("O")) {
-                        toReset.setDisable(false);
-                    }
-                    if (toReset.getText().matches("X")) {
-                        toReset.setDisable(true);
-                    }
-                } else {
-                    if (toReset.getText().matches("X")) {
-                        toReset.setDisable(false);
-                    }
-                    if (toReset.getText().matches("O")) {
-                        toReset.setDisable(true);
+                        }
                     }
                 }
-
             }
         }
     }
